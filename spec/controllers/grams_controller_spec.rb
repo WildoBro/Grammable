@@ -1,6 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe GramsController, type: :controller do
+  describe "#edit" do
+    it "shows page when valid ID is passed" do
+      gram = FactoryGirl.create(:gram)
+      get :edit, id: gram.id
+      expect(response).to have_http_status(:success)
+    end
+
+    it "return 404 error when invalid ID is passed" do
+      get :edit, id: 'TACOCAT'
+      expect(response).to have_http_status(:not_found)
+    end
+  end
+
+
   describe "#index" do
     it "shows the page" do
       get :index
@@ -61,6 +75,29 @@ RSpec.describe GramsController, type: :controller do
     it "return 404 error when invalid ID is passed" do
       get :show, id: 'TACOCAT'
       expect(response).to have_http_status(:not_found)
+    end
+  end
+
+  describe "#update" do
+    it "allows updates to grams" do
+      gram = FactoryGirl.create(:gram, message: "Initial Value")
+      patch :update, id: gram.id, gram: {message: "Changed!"}
+      expect(response).to redirect_to root_path
+      gram.reload
+      expect(gram.message).to eq "Changed!"
+    end
+
+    it "return 404 error when invalid ID is passed" do
+      patch :update, id: "YOLOSWAG", gram: {message: 'Changed'}
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it "shows edit form with status of unprocessable_entity" do
+      gram = FactoryGirl.create(:gram, message: "Initial Value")
+      patch :update, id: gram.id, gram: {message: ' '}
+      expect(response).to have_http_status(:unprocessable_entity)
+      gram.reload
+      expect(gram.message).to eq "Initial Value"
     end
   end
 
