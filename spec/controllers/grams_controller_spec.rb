@@ -101,4 +101,19 @@ RSpec.describe GramsController, type: :controller do
     end
   end
 
+  describe "#destroy" do
+    it "can delete grams" do 
+      gram = FactoryGirl.create(:gram)
+      delete :destroy, id: gram.id
+      expect(response).to redirect_to root_path
+      gram = Gram.find_by_id(gram.id)
+      expect(gram).to eq nil
+    end
+
+    it "return 404 error when invalid ID is passed" do 
+      delete :destroy, id: 'SPACEDUCK'
+      expect(response).to have_http_status(:not_found)
+    end
+  end
+
 end
