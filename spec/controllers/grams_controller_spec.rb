@@ -50,4 +50,18 @@ RSpec.describe GramsController, type: :controller do
       expect(Gram.count).to eq 0
     end
   end
+
+  describe "#show" do 
+    it "shows page when valid ID is passed" do
+      gram = FactoryGirl.create(:gram)
+      get :show, id: gram.id
+      expect(response).to have_http_status(:success)
+    end
+
+    it "return 404 error when invalid ID is passed" do
+      get :show, id: 'TACOCAT'
+      expect(response).to have_http_status(:not_found)
+    end
+  end
+
 end
