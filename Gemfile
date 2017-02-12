@@ -30,6 +30,7 @@ gem 'spring',        group: :development
 # Secondly, this gem allows you to see errors in your Heroku Logs that provide useful information in troubleshooting rather than the generic error messages that are usually displayed.
 gem 'rails_12factor', group: :production
 
+gem 'simple_form'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
