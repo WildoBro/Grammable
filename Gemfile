@@ -35,6 +35,8 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'sass-rails', '>= 3.2'
 gem 'devise', '>= 3.2.4'
 gem "factory_girl_rails", "~> 4.0"
+gem 'carrierwave', '~> 1.0'
+gem "figaro"
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
